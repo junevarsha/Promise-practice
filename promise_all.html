@@ -28,3 +28,10 @@
 	</script>
 </body>
 </html>
+
+
+<!-- Promise.all takes an array of promises, and returns a new promise which itself resolves when all of the promises in the array it was passed resolves, or rejects when any one of those promises rejects. catch catches a rejected promise, and returns a new promise which is resolved (unless you explicitly return a rejection).
+
+So if this catch wasn't here, if the setPromoData promise rejected (e.g. the request fails or receives an error response of some kind), the Promise.all would also reject, and the then callback would never fire, and the application would never start.
+
+Instead of putting a catch on all of the promises in this array, we could have also done something like Promise.all(initializationPromises).catch(()=>{}).then(() => { //.... Since there was some logic in the initializeIntl catch that I couldn't remove, I figured I would just add a catch here -->
