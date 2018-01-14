@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<pre id="foo"></pre>
+	<script>
+		const foo = document.getElementById('foo');
+		const log = (msg) => () => {foo.textContent = foo.textContent + '\n' + msg}
+		const makeP = (time, fn) => new Promise(
+			resolve => setTimeout(() => { fn(); resolve(); }, time)
+		);
+
+		const initP = [];
+		if (window.Intl) {
+			initP.push(makeP(4000, log('intl Done')));
+		}
+		const apiConfigPromise = initP.push(makeP(200, log('api Done')));
+		const getLanguagePromise = initP.push(makeP(200, log('lang Done')));
+		Promise.all(initP).then(
+			([apiConfig, getLanguage]) => {
+				log('ALL Done')()
+				log('Rendering')()
+			}
+		)
+	</script>
+</body>
+</html>

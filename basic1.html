@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>JavaScript Promises</h2>
+
+<p id="demo"></p>
+
+<script>
+/* ES6 */
+// const isMomHappy = false;
+const isMomHappy = true;
+
+// Promise creation
+const willIGetNewPhone = new Promise(
+    (resolve, reject) => { // fat arrow
+        if (isMomHappy) {
+        	console.log("inside if willIGetNewPhone");
+            const phone = {
+                brand: 'Samsung',
+                color: 'black'
+            };
+            resolve(phone);
+        } else {
+        	console.log("inside willIGetNewPhone");
+            const reason = new Error('mom is not happy');
+            reject(reason);
+        }
+        console.log("exit willIGetNewPhone");
+
+    }
+);
+
+console.log("Promise created", willIGetNewPhone)
+
+// Promise creation
+const showOff = function (phone) {
+	console.log("inside showOff");
+    const message = 'Hey friend, I have a new ' +
+                phone.color + ' ' + phone.brand + ' phone';
+    return Promise.resolve(message);
+    console.log("exit showOff");
+};
+
+// Notes:
+// We want to take some action once the promise is resolved or rejected
+// we use .then(resolved?) and .catch(reject?) to handle our action
+
+// In our example, we have function(fulfilled) { ... } in .then. 
+// What is the value of fulfilled? 
+// 
+// The fulfilled value is exactly the value you pass in your promise resolve(your_success_value). Therefore, it will be phone in our case.
+// 
+// 
+// We have function(error){ ... } in .catch. What is the value of error? As you can guess, the error value is exactly the value you pass in your promise reject(your_fail_value). 
+// 
+// Therefore, it will be reason in our case.
+// 
+// 
+// Promise Consumption
+const askMom = function () {
+	console.log("inside askMom")
+    willIGetNewPhone.then(showOff).then(fulfilled => console.log(fulfilled)).catch(error =>console.log(error.message));
+    console.log("exit askMom")
+};
+
+askMom();
+
+
+document.getElementById("demo").innerHTML = "Promise"
+</script>
+
+</body>
+</html>
